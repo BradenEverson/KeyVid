@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KeyVid.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -19,7 +20,7 @@ namespace KeyVideo.Pages
 
         public void OnGet()
         {
-
+            Video newVid = new Video("Garbage",new List<string>() { "Dog good", "like dog", "dog happy", "Im chode"});
         }
     }
 }
