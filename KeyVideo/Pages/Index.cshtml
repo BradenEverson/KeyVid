@@ -1,10 +1,21 @@
-﻿@page
+﻿
+@page
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
+@using Microsoft.AspNetCore.Identity
+@using KeyVideo
+@inject SignInManager<KeyVidUser> SignInManager
+@inject UserManager<KeyVidUser> UserManager
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center" style="margin-top:2%">
+    <h1 class="display-4">KeyVid</h1>
+    <h4 class="text-muted" style="margin-top:2%"><i>Create School Presentations With Minimal Information and Ease</i></h4>
 </div>
+@if (SignInManager.IsSignedIn(User))
+{
+    <div style="display:flex;justify-content:center;margin-top:8%">
+        <a class="btn btn-primary" asp-area="" asp-page="CreateVideo">Create A New Video</a>
+    </div>
+}

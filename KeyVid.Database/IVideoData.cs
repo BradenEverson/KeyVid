@@ -10,7 +10,7 @@ namespace KeyVid.Database
         public Video add(Video video);
         public Video update(Video video);
         public Video delete(Video video);
-        public Video getAllByUser(Guid guid);
+        public List<Video> getAllByUser(Guid guid);
         public Video getById(Guid id);
     }
 }

@@ -20,7 +20,7 @@ namespace KeyVideo.Pages
 
         public void OnGet()
         {
-            Video newVid = new Video("Garbage",new List<string>() { "Dog good", "like dog", "dog happy", "Im chode"});
+
         }
     }
 }
