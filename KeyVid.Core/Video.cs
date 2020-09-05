@@ -13,6 +13,7 @@ namespace KeyVid.Core
 {
     public class Video
     {
+        public Guid id { get; set; }
         public Guid ownerGuid { get; set; }
         public string topic { get; set; }
         public List<Bitmap> coreScenes { get; set; }
@@ -50,8 +51,10 @@ namespace KeyVid.Core
             scrapedImage.Save("wwwroot/images/" + topic + "/" + topic + place + ".jpg", ImageFormat.Jpeg);
             return scrapedImage;
         }
-        public Video(string topic, List<String> keyNotes)
+        public Video(string topic, List<String> keyNotes, Guid ownerGuid)
         {
+            this.id = Guid.NewGuid();
+            this.ownerGuid = ownerGuid;
             this.statistics = scrapeStatistics(topic);
             this.topic = topic;
             this.keyNotes = keyNotes;
