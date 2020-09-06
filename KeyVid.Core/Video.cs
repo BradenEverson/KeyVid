@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -46,8 +47,6 @@ namespace KeyVid.Core
             }
             Stream imageStream = webClient.OpenRead(imageUrls[debugPlace]);
             Bitmap scrapedImage = new Bitmap(imageStream);
-            DirectoryInfo newDirectory = Directory.CreateDirectory("wwwroot/images/" + topic);
-            scrapedImage.Save("wwwroot/images/" + topic + "/" + topic + place + ".jpg", ImageFormat.Jpeg);
             return scrapedImage;
         }
         public Video(string topic, List<String> keyNotes, Guid ownerGuid)
@@ -72,8 +71,34 @@ namespace KeyVid.Core
         }
         public string createVideo()
         {
-            string filePath = Guid.NewGuid().ToString() + ".mp4";
+            string filePath = "wwwroot/videos/" + Guid.NewGuid().ToString() + ".mp4";
             //Use ffmpeg to create new videos
+            for(int i = 0; i < this.coreScenes.Count; i++)
+            {
+                Graphics drawText = Graphics.FromImage(this.coreScenes[i]);
+                List<Point> points = new List<Point>()
+                {
+                    new Point(5,5),
+                    new Point(5, this.coreScenes[i].Height - 5),
+                    new Point(this.coreScenes[i].Width - 100, 5),
+                    new Point(this.coreScenes[i].Width - 100, this.coreScenes[i].Height - 5)
+                };
+                drawText.DrawString(this.keyNotes[i], new Font("Segoe", this.coreScenes[i].Width/15, FontStyle.Regular),new SolidBrush(Color.Black),points[0]);
+                DirectoryInfo newDirectory = Directory.CreateDirectory("wwwroot/images/" + topic);
+                this.coreScenes[i].Save("wwwroot/images/" + topic + "/" + topic + i + ".png", ImageFormat.Png);
+            }
+            string args = "ffmpeg -r 1 -f image2 -s 1920x1080 -i wwwroot/images/" + topic + "/" + topic + "%d.png -vcodec libx264 -crf 25 -pix_fmt yuv420p wwwroot/videos/" + topic + ".mp4";
+            Process cmd = new Process();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.RedirectStandardInput = true;
+            cmd.StartInfo.RedirectStandardOutput = true;
+            cmd.StartInfo.CreateNoWindow = true;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+            cmd.StandardInput.WriteLine(args);
+            cmd.StandardInput.Flush();
+            cmd.StandardInput.Close();
+            cmd.WaitForExit();
             return filePath;
         }
     }
