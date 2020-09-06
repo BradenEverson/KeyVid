@@ -24,7 +24,6 @@ namespace KeyVid.Core
         {
             int debugPlace = place;
             string url = "https://unsplash.com/s/photos/" + topic.Replace(' ','-') + "?orientation=landscape";
-            Console.WriteLine(url);
             List<String> imageUrls = new List<String>();
             WebClient webClient = new WebClient();
             HttpClient httpClient = new HttpClient();

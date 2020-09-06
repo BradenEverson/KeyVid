@@ -6,32 +6,23 @@
     <div class="text-center">
         <h1 class="display-4">Create A Video</h1>
     </div>
-    <form>
+    <form method="post">
         <div class="form-group" style="margin-top:2%">
             <label for="topic">Presentation Topic</label>
-            <input type="text" class="form-control border-primary" id="topic" placeholder="Topic" />
+            <input type="text" class="form-control border-primary" id="topic" placeholder="Topic" asp-for="topic"/>
         </div>
         <div class="input-group" style="margin-top:2%">
             <input type="search" class="form-control border-primary" id="content" placeholder="Enter a fact, you can add as many as you need" />
             <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="button" onclick="add()">Add</button>
+                <button class="btn btn-outline-primary" type="button" onclick="add('@Model.currentUser.Id')">Add</button>
             </div>
         </div>
-        <ul class="list-group" id="contentList" style="margin-top:2%;">
-        </ul>
+        <div style="overflow-x:hidden;overflow-y:auto;height:160px;">
+            <ul class="list-group" id="contentList" style="margin-top:2%;">
+            </ul>
+        </div>
+        <button type="submit" class="btn btn-success" style="width:100%;display:flex;justify-content:center;text-align:center;margin-top:8%" id="send">Create</button>
     </form>
-<script>
-    function add() {
-        if (document.getElementById("content").value != "") {
-            var ul = document.getElementById("contentList");
-            var li = document.createElement("li");
-            li.innerHTML = document.getElementById("content").value;
-            li.setAttribute("class", "list-group-item border-info");
-            li.setAttribute("style", "margin:2px");
-            ul.appendChild(li);
-            document.getElementById("listData").value = document.getElementById("listData").value + document.getElementById("content").value + ",";
-            document.getElementById("content").value = "";
-        }
-    }
-</script>
-<input type="hidden" id="listData" value="" asp-for="information"/>
+<div id="cleaner" onclick="clean('@Model.currentUser.Id')"></div>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/video.js"></script>

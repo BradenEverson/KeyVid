@@ -26,6 +26,7 @@ namespace KeyVideo
         {
             services.AddRazorPages();
             services.AddSingleton<IVideoData, InMemoryVideoData>();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +55,7 @@ namespace KeyVideo
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapHub<VideoHub>("VideoHub");
             });
         }
     }

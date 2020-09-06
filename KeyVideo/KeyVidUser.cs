@@ -9,6 +9,7 @@ namespace KeyVideo
     public class KeyVidUser : IdentityUser
     {
         public Guid userGuid { get; }
+        public string infoList { get; set; }
         public KeyVidUser()
         {
             this.userGuid = new Guid();
