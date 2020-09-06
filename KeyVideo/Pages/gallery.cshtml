@@ -4,5 +4,38 @@
     ViewData["Title"] = "gallery";
 }
 
-<h1>gallery</h1>
+<div class="text-center">
+    <h1 class="display-4">View Your KeyVids</h1>
+</div>
 
+@for (int i = 0; i <= Model.userVideos.Count(); i += 3)
+{
+    <div class="card-group">
+        @for (int f = 0; f < 3; f++)
+        {
+            @if (!(i + f >= Model.userVideos.Count()))
+            {
+                <div class="card border-success mb-3" style="width: 24rem">
+                    <div class="card-body border-warning">
+                        <h5 class="card-header">@Model.userVideos[i + f].topic</h5>
+                        <h6 class="card-subtitle text-muted" style="margin-top:1%">@Model.userVideos[i + f].id</h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <video width="100%" height="100%" autoplay>
+                                    <source src="~/videos/@(Model.userVideos[i + f].topic).mp4" type="video/mp4"/>
+                                </video>
+                                <div style="display:flex;justify-content:left">
+                                    <button class="btn btn-sm btn-outline-dark" style="margin-top:1%">Download</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+            else
+            {
+                break;
+            }
+        }
+    </div>
+}

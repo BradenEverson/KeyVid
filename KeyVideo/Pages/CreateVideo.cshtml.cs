@@ -30,7 +30,7 @@ namespace KeyVideo
             currentUser = db.Users.FirstOrDefault(r => r.Email == User.Identity.Name);
             Console.WriteLine(currentUser.Id);
         }
-        public void OnPost()
+        public IActionResult OnPost()
         {
             currentUser = db.Users.FirstOrDefault(r => r.Email == User.Identity.Name);
             List<String> info = currentUser.infoList.Split(',').ToList();
@@ -38,6 +38,7 @@ namespace KeyVideo
             Video video = new Video(topic, info, Guid.Parse(currentUser.Id));
             video.createVideo();
             videos.add(video);
+            return Redirect("./gallery");
         }
     }
 }
